@@ -27,7 +27,7 @@
     }];
     
     SceneDelegate *myDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
-
+    //[[UIApplication sharedApplication].keyWindow setRootViewController: HomeNavController];
     
     [self dismissViewControllerAnimated:false completion:nil];
 }

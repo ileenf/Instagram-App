@@ -15,6 +15,7 @@
 		A12909282694FBAE004B5E4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A12909272694FBAE004B5E4A /* main.m */; };
 		A1290930269501EC004B5E4A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A129092F269501EC004B5E4A /* LoginViewController.m */; };
 		A129093426950911004B5E4A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A129093326950911004B5E4A /* HomeViewController.m */; };
+		A1290937269517EF004B5E4A /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1290936269517EF004B5E4A /* ComposeViewController.m */; };
 		EC1EFBF77DFC12B1EED63540 /* Pods_Instagram_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E5BA476A247628A9C723E1 /* Pods_Instagram_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,8 @@
 		A129092F269501EC004B5E4A /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		A129093226950911004B5E4A /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		A129093326950911004B5E4A /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		A1290935269517EF004B5E4A /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
+		A1290936269517EF004B5E4A /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		B380633E106489410BC83471 /* Pods-Instagram App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram App.debug.xcconfig"; path = "Target Support Files/Pods-Instagram App/Pods-Instagram App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,6 +95,8 @@
 				A129092F269501EC004B5E4A /* LoginViewController.m */,
 				A129093226950911004B5E4A /* HomeViewController.h */,
 				A129093326950911004B5E4A /* HomeViewController.m */,
+				A1290935269517EF004B5E4A /* ComposeViewController.h */,
+				A1290936269517EF004B5E4A /* ComposeViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 				A1290930269501EC004B5E4A /* LoginViewController.m in Sources */,
 				A12909172694FBAC004B5E4A /* AppDelegate.m in Sources */,
 				A12909282694FBAE004B5E4A /* main.m in Sources */,
+				A1290937269517EF004B5E4A /* ComposeViewController.m in Sources */,
 				A129093426950911004B5E4A /* HomeViewController.m in Sources */,
 				A129091A2694FBAC004B5E4A /* SceneDelegate.m in Sources */,
 			);
