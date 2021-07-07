@@ -6,6 +6,8 @@
 //
 
 #import "PostCell.h"
+#import "Post.h"
+#import <Parse/PFImageView.h>
 
 @implementation PostCell
 
@@ -20,4 +22,13 @@
     // Configure the view for the selected state
 }
 
+- (void)setPost:(Post *)post {
+    _post = post;
+    self.postImage.file = post[@"image"];
+    [self.postImage loadInBackground];
+    self.postCaption.text = post[@"caption"];
+}
+
 @end
+
+

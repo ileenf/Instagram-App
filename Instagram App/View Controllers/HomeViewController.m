@@ -22,7 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     // Do any additional setup after loading the view.
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    [self loadPosts];
 }
 
 - (IBAction)handleLogout:(id)sender {
@@ -38,6 +42,9 @@
 
 -(void)loadPosts{
     PFQuery * query = [PFQuery queryWithClassName:@"Post"];
+    [query orderByDescending:@"createdAt"];
+    [query includeKey:@"author"];
+    query.limit = 20;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error == nil){
             self.posts = objects;
@@ -48,16 +55,20 @@
     }];
     
     
+    
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
     Post *post = self.posts[indexPath.row];
     //cell.postUsername.text = post[@"username"];
-    cell.postCaption.text = post[@"caption"];
+    //cell.postCaption.text = post[@"caption"];
     //PFFileObject *image = post[@"image"];
     //[cell.postImage setImageWithURL:image.url];
-    //cell.post = post;
+    cell.post = post;
+    
+    [cell setPost:post];
     
     return cell;
 }
