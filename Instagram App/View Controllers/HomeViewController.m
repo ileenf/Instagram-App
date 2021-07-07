@@ -16,6 +16,7 @@
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *posts;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation HomeViewController
@@ -27,6 +28,11 @@
     // Do any additional setup after loading the view.
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self loadPosts];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    
+    [self.refreshControl addTarget:self action:@selector(loadPosts) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
 }
 
 - (IBAction)handleLogout:(id)sender {
@@ -52,6 +58,7 @@
         } else {
             NSLog(@"error");
         }
+        [self.refreshControl endRefreshing];
     }];
     
     

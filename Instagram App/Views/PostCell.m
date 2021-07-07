@@ -27,6 +27,7 @@
     self.postImage.file = post[@"image"];
     [self.postImage loadInBackground];
     self.postCaption.text = post[@"caption"];
+    self.postUsername.text = post[@"author"][@"username"];
 }
 
 @end
