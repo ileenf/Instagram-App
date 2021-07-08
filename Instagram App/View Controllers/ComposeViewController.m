@@ -9,7 +9,7 @@
 #import "Post.h"
 #import "Parse/Parse.h"
 
-@interface ComposeViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ComposeViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextView *captionView;
 @property (strong, nonatomic) UIImage *imageToPost;
@@ -21,8 +21,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.captionView.delegate = self;
+    
+    self.captionView.text = @"Placeholder";
+    self.captionView.textColor = [UIColor lightGrayColor];
     // Do any additional setup after loading the view.
     
+    
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    if (textView.textColor == [UIColor lightGrayColor]) {
+        textView.text = nil;
+        textView.textColor = [UIColor blackColor];
+        }
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Placeholder";
+        textView.textColor = [UIColor lightGrayColor];
+        }
     
 }
 
@@ -66,6 +84,7 @@
             NSLog(@"The message was saved!");
             self.captionView.text = @"";
             [self dismissViewControllerAnimated:true completion:nil];
+            [self.delegate didPost];
         } else {
             NSLog(@"Problem saving message: %@", error.localizedDescription);
             
