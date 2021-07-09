@@ -11,11 +11,12 @@
 #import "ComposeViewController.h"
 #import "PostCell.h"
 #import "Post.h"
-
+#import "DetailsViewController.h"
+#import "LoginViewController.h"
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSArray *posts;
+@property (strong, nonatomic) NSMutableArray *posts;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
@@ -42,15 +43,20 @@
     }];
     
     SceneDelegate *myDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
-    //[[UIApplication sharedApplication].keyWindow setRootViewController: HomeNavController];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    [[UIApplication sharedApplication].keyWindow setRootViewController: HomeNavController];
+    LoginViewController *loginviewcontroller = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    myDelegate.window.rootViewController = loginviewcontroller;
     
-    [self dismissViewControllerAnimated:false completion:nil];
+    //[self dismissViewControllerAnimated:false completion:nil];
 }
 
 -(void)loadPosts{
     PFQuery * query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
+    //[query includeKey:@"author.profileImage"];
+    [query includeKey:@"createdAt"];
     query.limit = 20;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error == nil){
@@ -66,7 +72,10 @@
     
 }
 
--(void)didPost {
+-(void)didPost:(Post *) post {
+    [self.posts insertObject:post atIndex:-1];
+    [self.tableView reloadData];
+    
     [self loadPosts];
     
 }
@@ -75,13 +84,10 @@
     
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
     Post *post = self.posts[indexPath.row];
-    //cell.postUsername.text = post[@"username"];
-    //cell.postCaption.text = post[@"caption"];
-    //PFFileObject *image = post[@"image"];
-    //[cell.postImage setImageWithURL:image.url];
+ 
     cell.post = post;
     
-    [cell setPost:post];
+    //[cell setPost:post];
     
     return cell;
 }
@@ -93,10 +99,17 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"DetailSegue"]) {
+        PostCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Post *post = self.posts[indexPath.row];
+
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.post = post;
+
+
+    } 
    
 }
 

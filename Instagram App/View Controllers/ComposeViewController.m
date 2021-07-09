@@ -9,7 +9,7 @@
 #import "Post.h"
 #import "Parse/Parse.h"
 
-@interface ComposeViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
+@interface ComposeViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextView *captionView;
 @property (strong, nonatomic) UIImage *imageToPost;
@@ -26,6 +26,25 @@
     self.captionView.textColor = [UIColor lightGrayColor];
     // Do any additional setup after loading the view.
     
+    [self checkForCameraOption];
+    
+    
+    
+    
+}
+
+-(void)checkForCameraOption {
+    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+    imagePickerVC.delegate = self;
+    imagePickerVC.allowsEditing = YES;
+
+    // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:imagePickerVC animated:YES completion:nil];
+    }
+ 
+
     
 }
 
@@ -38,7 +57,7 @@
 
 -(void)textViewDidEndEditing:(UITextView *)textView{
     if ([textView.text isEqualToString:@""]) {
-        textView.text = @"Placeholder";
+        textView.text = @"Write a caption...";
         textView.textColor = [UIColor lightGrayColor];
         }
     
@@ -82,9 +101,12 @@
     [Post postUserImage:self.imageToPost withCaption:self.captionView.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             NSLog(@"The message was saved!");
+////
+            
             self.captionView.text = @"";
+//            [self.delegate didPost];
             [self dismissViewControllerAnimated:true completion:nil];
-            [self.delegate didPost];
+            
         } else {
             NSLog(@"Problem saving message: %@", error.localizedDescription);
             

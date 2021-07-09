@@ -24,7 +24,7 @@
     if (user != nil) {
         NSLog(@"Welcome back %@ 😀", user.username);
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *homeNavController = [storyboard instantiateViewControllerWithIdentifier:@"HomeNavController"];
+        UITabBarController *homeNavController = [storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
         self.window.rootViewController = homeNavController;
     } else {
         NSLog(@"We hit this");
