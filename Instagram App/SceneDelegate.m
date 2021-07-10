@@ -22,13 +22,10 @@
     
     PFUser *user = [PFUser currentUser];
     if (user != nil) {
-        NSLog(@"Welcome back %@ 😀", user.username);
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UITabBarController *homeNavController = [storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
         self.window.rootViewController = homeNavController;
-    } else {
-        NSLog(@"We hit this");
-    }
+    } 
 }
 
 

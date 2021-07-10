@@ -27,7 +27,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
-    // Do any additional setup after loading the view.
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self loadPosts];
     
@@ -39,36 +38,28 @@
 
 - (IBAction)handleLogout:(id)sender {
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-        // PFUser.current() will now be nil
     }];
     
     SceneDelegate *myDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    [[UIApplication sharedApplication].keyWindow setRootViewController: HomeNavController];
     LoginViewController *loginviewcontroller = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     myDelegate.window.rootViewController = loginviewcontroller;
     
-    //[self dismissViewControllerAnimated:false completion:nil];
 }
 
 -(void)loadPosts{
     PFQuery * query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
-    //[query includeKey:@"author.profileImage"];
     [query includeKey:@"createdAt"];
     query.limit = 20;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error == nil){
             self.posts = objects;
             [self.tableView reloadData];
-        } else {
-            NSLog(@"error");
-        }
+        } 
         [self.refreshControl endRefreshing];
     }];
-    
-    
     
 }
 
@@ -86,16 +77,13 @@
     Post *post = self.posts[indexPath.row];
  
     cell.post = post;
-    
-    //[cell setPost:post];
-    
+        
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.posts.count;
 }
-
 
 #pragma mark - Navigation
 
@@ -108,10 +96,7 @@
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.post = post;
 
-
-    } 
-   
+    }
 }
-
 
 @end

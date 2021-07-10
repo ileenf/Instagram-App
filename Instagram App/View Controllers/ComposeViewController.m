@@ -22,14 +22,10 @@
     [super viewDidLoad];
     self.captionView.delegate = self;
     
-    self.captionView.text = @"Placeholder";
+    self.captionView.text = @"Write a caption...";
     self.captionView.textColor = [UIColor lightGrayColor];
-    // Do any additional setup after loading the view.
     
     [self checkForCameraOption];
-    
-    
-    
     
 }
 
@@ -38,13 +34,10 @@
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;
 
-    // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
- 
-
     
 }
 
@@ -60,28 +53,22 @@
         textView.text = @"Write a caption...";
         textView.textColor = [UIColor lightGrayColor];
         }
-    
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
-    // Get the image captured by the UIImagePickerController
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
     
     editedImage = [self resizeImage:editedImage withSize:CGSizeMake(300, 300)];
     self.imageToPost = editedImage;
-
-    // Do something with the images (based on your use case)
     
     if(editedImage) {
-            [self.imageView setImage:editedImage];
-        }
-        else {
-            [self.imageView setImage:originalImage];
-        }
+        [self.imageView setImage:editedImage];
+    } else {
+        [self.imageView setImage:originalImage];
+    }
     
-    // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -100,41 +87,23 @@
     
     [Post postUserImage:self.imageToPost withCaption:self.captionView.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
-            NSLog(@"The message was saved!");
-////
-            
             self.captionView.text = @"";
-//            [self.delegate didPost];
             [self dismissViewControllerAnimated:true completion:nil];
             
-        } else {
-            NSLog(@"Problem saving message: %@", error.localizedDescription);
-            
+        } else {            
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Sharing Failed"
                                                                                        message:@"Invalid caption or image"
                                                                                 preferredStyle:(UIAlertControllerStyleAlert)];
             UIAlertAction *TryAgainAction = [UIAlertAction actionWithTitle:@"Try Again"
                                                                 style:UIAlertActionStyleCancel
                                                               handler:^(UIAlertAction * _Nonnull action) {
-                                                                     // handle cancel response here. Doing nothing will dismiss the view.
                                                               }];
-            // add the cancel action to the alertController
             [alert addAction:TryAgainAction];
             
             [self presentViewController:alert animated:YES completion:^{
-                // optional code for what happens after the alert controller has finished presenting
             }];
         }
     }];
-    
-//    PFObject *post = [PFObject objectWithClassName:@"Posts"];
-//    post[@"caption"] = self.captionView.text;
-//    post[@"image"] = self.imageView;
-    
-//    [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
-//        
-//    }];
-    
     
 }
 
@@ -161,8 +130,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-
-
 
 @end

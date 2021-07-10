@@ -15,7 +15,6 @@
     _post = post;
     self.profileImageView.file = post[@"image"];
     [self.profileImageView loadInBackground];
-    NSLog(@"in here");
     
 }
 
